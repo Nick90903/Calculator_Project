@@ -27,7 +27,12 @@
 .input_screen {
     background-color: rgb(204, 202, 202);
     width: 160px;
+    height: 20px;
     text-align: right;
+}
+
+.output {
+    height: 20px;
 }
 
 #fifth_row {

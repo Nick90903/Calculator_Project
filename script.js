@@ -1,6 +1,7 @@
 let buttons = Array.from(document.querySelectorAll('.num_op'));
 let outputField = document.querySelector('.input_screen');
 let outputText = '';
+let calc_numField = document.querySelector('.output');
 let action = 0;
 let firstNumber = [];
 let secondNumber = [];
@@ -8,13 +9,18 @@ let operator;
 
 console.table(buttons);
 console.log(outputField);
+calc_numField.textContent = '';
+outputField.textContent = '';
 buttons.forEach(item => item.addEventListener('click', function() {
     buttonClicked(item.textContent);
 }));
 
 function buttonClicked(btnID) {
-    console.log(btnID);
-    if(action == 0 && btnID >= 0 && btnID <= 9) {
+    console.log(`BtnID: ${btnID}`);
+    if(btnID == 'Calculate' && secondNumber.length > 0) {
+        console.log("calulating");
+        calculate(firstNumber, secondNumber, operator);
+    } else if(action == 0 && btnID >= 0 && btnID <= 9) {
         firstNumber.push(btnID);
         outputText = firstNumber.join('');
         outputField.textContent = outputText;
@@ -26,6 +32,11 @@ function buttonClicked(btnID) {
         console.log(secondNumber);
     } else if (btnID == 'C') {
         //CLEAR CALCULATOR
+        firstNumber = [];
+        secondNumber = [];
+        op = '';
+        action = 0;
+        outputField.textContent = '';
     } else if (btnID == '*' || btnID == '/' || btnID == '+' || btnID == '-') {
         if(action != 1){
             operator = btnID;
@@ -33,8 +44,6 @@ function buttonClicked(btnID) {
             outputField.textContent = outputText;
             console.log(operator);
             action = 1;
-        }else if(btnID == 'Calculate' && secondNumber.length > 0) {
-            console.log(calculate(firstNumber.join(''), secondNumber.join(''), operator));
         } else {
             console.log('error')
         }
@@ -43,8 +52,24 @@ function buttonClicked(btnID) {
 
 function calculate(num1, num2, op) {
     switch(op) {
-        case op == '*':
-            return num1 * num2;
+        case '*':
+            console.log(num1 * num2);
+            calc_numField.textContent = (num1.join('') * num2.join('')).toString();
+            break;
+        
+        case '/':
+            console.log(num1 / num2);
+            calc_numField.textContent = (num1.join('') / num2.join('')).toString();
+            break;
+
+        case '+':
+            console.log(num1 + num2);
+            calc_numField.textContent = (num1.join('') + num2.join('')).toString();
+            break;
+
+        case '-':
+            console.log(num1 - num2);
+            calc_numField.textContent = (num1.join('') - num2.join('')).toString();
             break;
     }
 }
